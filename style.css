@@ -59,10 +59,8 @@ input[type="button"]:hover {
 }
 
 #canc:hover {
-    /*outline: 2px solid rgba(71, 143, 152, 0.7);*/
     background-color: rgba(174, 11, 67);
 }
 #canc:active {
-    /*outline: 2px solid rgba(71, 143, 152, 0.7);*/
     outline: 2px solid rgba(174, 11, 67);
 }

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+
+<body>
+<table id="calc">
+    <tr>
+        <td colspan="3">
+            <input type="text" id="display" disabled>
+        </td>
+        <td><input type="button" id="canc" value="C" onclick="clearDisplay()"></td>
+    </tr>
+
+    <tr>
+        <td><input type="button" value="7" onclick="appendNumber('7')"></td>
+        <td><input type="button" value="8" onclick="appendNumber('8')"></td>
+        <td><input type="button" value="9" onclick="appendNumber('9')"></td>
+        <td><input type="button" value="+" onclick="appendOperation('+')"></td>
+    </tr>
+    <tr>
+        <td><input type="button" value="4" onclick="appendNumber('4')"></td>
+        <td><input type="button" value="5" onclick="appendNumber('5')"></td>
+        <td><input type="button" value="6" onclick="appendNumber('6')"></td>
+        <td><input type="button" value="-" onclick="appendOperation('-')"></td>
+    </tr>
+        <td><input type="button" value="1" onclick="appendNumber('1')"></td>
+        <td><input type="button" value="2" onclick="appendNumber('2')"></td>
+        <td><input type="button" value="3" onclick="appendNumber('3')"></td>
+        <td><input type="button" value="/" onclick="appendOperation('/')"></td>
+    <tr>
+    </tr>
+    <tr>
+        <td><input type="button" value="0" onclick="appendNumber('0')"></td>
+        <td><input type="button" value="." onclick="appendNumber('.')"></td>
+        <td><input type="button" value="=" onclick="calculate()"></td>
+        <td><input type="button" value="*" onclick="appendOperation('*')"></td>
+    </tr>
+</table>
+
+<script>
+    let currentInput = '';
+    let currentOperation = '';
+    let previousInput = '';
+
+    function appendNumber(number) {
+        currentInput += number;
+        document.getElementById('display').value = `${previousInput} ${currentOperation} ${currentInput}`;
+    }
+
+    function appendOperation(operation) {
+        if (currentInput === '') return;
+        if (previousInput !== '') {
+            calculate();
+        }
+        currentOperation = operation;
+
+        previousInput = currentInput;
+        currentInput = '';
+        document.getElementById('display').value = `${previousInput} ${currentOperation}`;
+    }
+
+    function calculate() {
+        if (previousInput === '' || currentInput === '') return;
+        let result;
+        let prev = parseFloat(previousInput);
+        let current = parseFloat(currentInput);
+
+        switch (currentOperation) {
+            case '+':
+                result = prev + current;
+                break;
+            case '-':
+                result = prev - current;
+                break;
+            case '*':
+                result = prev * current;
+                break;
+            case '/':
+                if (current === 0) {
+                    document.getElementById('display').value = "ERROR";
+                    return;
+                }
+                result = prev / current;
+                break;
+            default:
+                return;
+        }
+
+        currentInput = result.toString();
+        currentOperation = '';
+        previousInput = '';
+        document.getElementById('display').value = currentInput;
+    }
+
+    function clearDisplay() {
+        currentInput = '';
+        previousInput = '';
+        currentOperation = '';
+        document.getElementById('display').value = '';
+    }
+
+</script>
+
+</body>
+</html>
